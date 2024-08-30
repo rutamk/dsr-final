@@ -40,9 +40,9 @@ const ProfileInfo = ({ userInfo, onLogout }) => {
           onClick={toggleModal}
         >
           {!isAdmin ? (
-            <span className='hover:text-blue-600 underline-offset-2'>{userInfo?.fullName}</span>
+            <span className='hover:text-blue-600 '>{userInfo?.fullName}</span>
           ) : (
-            <span className='hover:text-blue-600 underline-offset-2'>{userInfo?.fullName}</span>
+            <span className='hover:text-blue-600 '>{userInfo?.fullName}</span>
           )}
         </p>
 

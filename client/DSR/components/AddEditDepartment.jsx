@@ -237,7 +237,7 @@ const AddEditDepartment = () => {
         {departments.map((department) => (
           <tr
             key={department._id}
-            onClick={() => handleOpenModal(department)}
+            onDoubleClick={() => handleOpenModal(department)}
             className="cursor-pointer hover:bg-gray-100 transition duration-200"
           >
             <td className="border-b px-6 py-4">{department.deptName}</td>
