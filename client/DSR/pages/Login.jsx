@@ -80,7 +80,7 @@ const Login = () => {
 
   return (
     <div className='min-h-screen min-w-screen flex flex-col bg-slate-50 bg-cover bg-center'
-      style={{ backgroundImage: `url('../src/assets/ClgBg.png')`,
+      style={{ backgroundImage: `url('/../src/assets/ClgBg.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100%',
@@ -92,7 +92,7 @@ const Login = () => {
           <form onSubmit={handleLogin} className='select-none'>
             <div className='flex items-center justify-center px-6 py-2 drop-shadow shrink-0 mt-0 mb-5'>
               <div className='w-[130px]'>
-                <img src='../src/assets/Logo1.png' className='object-left ' alt="Logo" />
+                <img src='/../src/assets/Logo1.png' className='object-left ' alt="Logo" />
               </div>
             </div>
 
