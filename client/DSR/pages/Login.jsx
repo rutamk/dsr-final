@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../utils/axiosInstance';
 import PasswordInput from '../components/PasswordInput';
 import { validateEmail, validatePassword } from '../utils/helper';
+import ClgBg from "../src/assets/ClgBg.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const Login = () => {
 
   return (
     <div className='min-h-screen min-w-screen flex flex-col bg-slate-50 bg-cover bg-center'
-      style={{ backgroundImage: `url('../../src/assets/ClgBg.png')`,
+      style={{ backgroundImage: {ClgBg},
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100%',
