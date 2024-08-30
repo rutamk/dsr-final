@@ -1,6 +1,8 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo';
 import { useNavigate } from 'react-router-dom';
+import Logo1 from '../src/assets/Logo1.png';
+
 
 const Navbar = ({ userInfo, selectedDept }) => {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ const Navbar = ({ userInfo, selectedDept }) => {
   return (
     <div className={`grid ${!isAdmin ? 'grid-cols-3' : 'grid-cols-3'} items-center shadow-lg bg-white h-20 pt-2 pb-2 my-auto`}>
       {/* VIT Logo */}
-      <img src='../../src/assets/Logo1.png' alt="VIT Logo" className="w-[150px] justify-start pl-4 "/>
+      <img src={Logo1} alt="VIT Logo" className="w-[150px] justify-start pl-4 "/>
 
       {/* Conditionally display department name or "Admin Login" */}
       <div className='font-medium text-3xl text-center'>
