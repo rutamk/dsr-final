@@ -227,11 +227,15 @@ const AddEditDepartment = () => {
         Add Department
       </button>
     </div>
-    <table className="bg-white border border-gray-200 rounded-lg w-full h-[30vh] mt-5">
+    <table className="bg-white border border-gray-200 rounded-lg w-full h-[50vh] mt-5">
   <thead>
     <tr>
-      <th className="bg-gray-200 text-gray-700 text-xl border-b border-gray-300 px-6 py-3 font-semibold">Department Name</th>
-      <th className="bg-gray-200 text-gray-700 text-xl border-b border-gray-300 px-6 py-3 font-semibold">Labs</th>
+      <th className="bg-gray-200 text-gray-700 text-2xl border-b border-gray-300 px-8 py-4 font-semibold text-center">
+        Department Name
+      </th>
+      <th className="bg-gray-200 text-gray-700 text-2xl border-b border-gray-300 px-8 py-4 font-semibold text-center">
+        Labs
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -241,14 +245,15 @@ const AddEditDepartment = () => {
         onDoubleClick={() => handleOpenModal(department)}
         className="cursor-pointer hover:bg-gray-100 transition duration-200"
       >
-        <td className="border-b px-6 py-4">{department.deptName}</td>
-        <td className="border-b px-6 py-4">
+        <td className="border-b px-8 py-6 text-center text-lg">{department.deptName}</td>
+        <td className="border-b px-8 py-6 text-center text-lg">
           {department.labs.map((lab) => lab.labName).join(', ')}
         </td>
       </tr>
     ))}
   </tbody>
 </table>
+
 
 
 
