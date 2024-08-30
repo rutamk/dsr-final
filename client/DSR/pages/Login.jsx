@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../utils/axiosInstance';
 import PasswordInput from '../components/PasswordInput';
 import { validateEmail, validatePassword } from '../utils/helper';
-import ClgBg from "../src/assets/ClgBg.png";
+import ClgBg from '../src/assets/ClgBg.png';
+import Logo1 from '../src/assets/Logo1.png';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const Login = () => {
 
   return (
     <div className='min-h-screen min-w-screen flex flex-col bg-slate-50 bg-cover bg-center'
-      style={{ backgroundImage: `url('/../src/assets/ClgBg.png')`,
+    style={{ backgroundImage: `url(${ClgBg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100%',
@@ -93,7 +94,7 @@ const Login = () => {
           <form onSubmit={handleLogin} className='select-none'>
             <div className='flex items-center justify-center px-6 py-2 drop-shadow shrink-0 mt-0 mb-5'>
               <div className='w-[130px]'>
-                <img src='/../src/assets/Logo1.png' className='object-left ' alt="Logo" />
+              <img src={Logo1} className='object-left' alt="Logo" />
               </div>
             </div>
 
