@@ -17,11 +17,14 @@ const DSR = () => {
   const getUserInfo = async () => {
     try {
       const response = await axiosInstance.get("/get-user");
-      if (response.data && response.data.user) {
+      if (response.data && response.data.user && response.data.user.role !== "Admin") {
         setUserInfo(response.data.user);
         setDepartment(response.data.user.department || '');
         setLab(response.data.user.lab || '');
         setSection(response.data.user.section || '');
+      }
+      else{
+        navigate('/home');
       }
     } catch (error) {
       if (error.response && error.response.status) {
