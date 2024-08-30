@@ -16,9 +16,13 @@ const Home = () => {
     try {
       // console.log("inside");
       const response = await axiosInstance.get("/get-user");
-      if (response.data && response.data.user) {
+      if (response.data && response.data.user && response.data.user.role === 'Admin') {
         // console.log("response" + response.data.user);
         setUserInfo(response.data.user);
+      }
+      else{
+        localStorage.clear();
+        navigate("/login"); // Use navigate here
       }
     } catch (error) {
       if (error.response && error.response.status) {
