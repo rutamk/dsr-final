@@ -81,7 +81,7 @@ const Login = () => {
 
   return (
     <div className='min-h-screen min-w-screen flex flex-col bg-slate-50 bg-cover bg-center'
-      style={{ backgroundImage: `url(https://drive.google.com/file/d/1Tjs7ib2SDmtmzf9AJi6eZVHBd6lel-VZ/view?usp=share_link)`,
+      style={{ backgroundImage: `url('/../src/assets/ClgBg.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100%',
