@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://dsr-final.vercel.app",
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
