@@ -78,30 +78,36 @@ The **Dead Stock Register (DSR) Management System** is designed to address the i
 ### 🖥️ Client-Side Setup
 
 - 1 - Navigate to the client folder:
-    ```
+    ```bash
    cd client
+    ```
 
 - 2 - Then, move to the DSR folder:
-    ```
+   ```bash
    cd DSR
+    ```
 
 - 3 - Install the necessary dependencies:
-    ```
+    ```bash
    npm i
+    ```
 
 - 4 - Start the frontend development server:
-    ```
+    ```bash
    npm run dev
-
+    ```
+    
 ### 🗄️ Server-Side Setup
 
 - 1 - Navigate to the server folder:
-    ```
+    ```bash
    cd server
+    ```
 
 - 2 - Install the necessary dependencies:
-    ```
+    ```bash
    npm i
+    ```
 
 - 3 - Create a `.env` file in the server folder and define the following variables:
 
@@ -116,17 +122,18 @@ The **Dead Stock Register (DSR) Management System** is designed to address the i
    - MAILER_FROM_ID: The email address that will appear in the "From" field when sending emails through the system.
 
    Example `.env` file:
-   ```
+   ```bash
    ACCESS_TOKEN_SECRET=your_jwt_secret_key
    MAILER_TRANSPORTER_SERVICE=gmail
    MAILER_AUTH_ID=your_email@gmail.com
    MAILER_AUTH_PASS=your_email_app_password (not email id password)
    MAILER_FROM_ID=your_email@gmail.com
+   ```
 
 - 4 . Start the backend server:
-  ```
+  ```bash
    npm start
-
+  ```
 
 ## 📋 Usage
 
