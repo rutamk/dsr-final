@@ -111,7 +111,7 @@ The **Dead Stock Register (DSR) Management System** is designed to address the i
 
    - MAILER_AUTH_ID: This is the email ID used for sending emails via the Nodemailer transporter.
 
-   - MAILER_AUTH_PASS: This is the password or app-specific password for the MAILER_AUTH_ID account, required for authentication.
+   - MAILER_AUTH_PASS: This is the password or app-specific password for the MAILER_AUTH_ID account, required for authentication. [Youtube Guide](https://youtu.be/MkLX85XU5rU?si=A1eVoJwHBZDsg15i)
 
    - MAILER_FROM_ID: The email address that will appear in the "From" field when sending emails through the system.
 
@@ -124,6 +124,7 @@ The **Dead Stock Register (DSR) Management System** is designed to address the i
    MAILER_FROM_ID=your_email@gmail.com
 
 - 4 . Start the backend server:
+  ```
    npm start
 
 
@@ -134,6 +135,33 @@ The **Dead Stock Register (DSR) Management System** is designed to address the i
 - **PDF Generation**: Generate detailed reports in PDF format for documentation and sharing. Perfect for record-keeping and communication. 📄💼
 - **Email Notifications**: Receive automatic email alerts about changes to the register, ensuring you stay updated in real time. 📧🔔
 
+## Screenshots
+
+- **Login Page**
+  
+![CleanShot 2024-09-04 at 15 08 22@2x](https://github.com/user-attachments/assets/7240bbcc-e9ba-4d60-aef4-c434d108e304)
+
+- **DSR Page**
+  
+![CleanShot 2024-09-04 at 15 09 31@2x](https://github.com/user-attachments/assets/c29dfb4f-7827-4fde-b89c-8e4a025cffff)
+
+![CleanShot 2024-09-04 at 15 09 52@2x](https://github.com/user-attachments/assets/0a0aa27c-67d2-48f1-b2e0-5d8296ddb0a8)
+
+![CleanShot 2024-09-04 at 15 10 45@2x](https://github.com/user-attachments/assets/4c8eda37-d3c2-4c2a-b815-26e46b191bc0)
+
+-**PDF Conversion**
+
+![CleanShot 2024-09-04 at 15 12 18@2x](https://github.com/user-attachments/assets/ebff3eae-e962-4223-9dba-9e2d249df215)
+
+-**Admin Page**
+
+![CleanShot 2024-09-04 at 15 04 43@2x](https://github.com/user-attachments/assets/4d422554-d60c-4cf6-a053-6cf76dd013cd)
+
+![CleanShot 2024-09-04 at 15 04 58@2x](https://github.com/user-attachments/assets/1ee1d4fb-445e-4f9e-9c3d-8be8d12b0ad8)
+
+![CleanShot 2024-09-04 at 15 05 16@2x](https://github.com/user-attachments/assets/c3565582-b29e-45ae-bbb3-9cc915cfe52a)
+
+![CleanShot 2024-09-04 at 15 07 16@2x](https://github.com/user-attachments/assets/9cb27438-98b8-491b-bd52-9c98adf98138)
 
 For any issues or questions, feel free to open an issue or reach out to us at:
 systems.dsr@gmail.com.
