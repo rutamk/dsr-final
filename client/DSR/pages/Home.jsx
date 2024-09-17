@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import { useNavigate } from 'react-router-dom';
-import AddEditDepartment from '../components/AddEditDepartment';
-import UserPanel from '../components/UserPanel';
-import axiosInstance from '../utils/axiosInstance';
-import SidePanel from '../components/SidePanel';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import AddEditDepartment from "../components/AddEditDepartment";
+import UserPanel from "../components/UserPanel";
+import axiosInstance from "../utils/axiosInstance";
+import SidePanel from "../components/SidePanel";
 
 const Home = () => {
   const [userInfo, setUserInfo] = useState(null);
-  const [selectedOption, setSelectedOption] = useState('departments'); // State to manage selected option
+  const [selectedOption, setSelectedOption] = useState("departments"); // State to manage selected option
   const navigate = useNavigate(); // Define navigate here
 
   const getUserInfo = async () => {
@@ -16,11 +16,14 @@ const Home = () => {
     try {
       // console.log("inside");
       const response = await axiosInstance.get("/get-user");
-      if (response.data && response.data.user && response.data.user.role === 'Admin') {
+      if (
+        response.data &&
+        response.data.user &&
+        response.data.user.role === "Admin"
+      ) {
         // console.log("response" + response.data.user);
         setUserInfo(response.data.user);
-      }
-      else{
+      } else {
         localStorage.clear();
         navigate("/login"); // Use navigate here
       }
@@ -30,9 +33,9 @@ const Home = () => {
         navigate("/login"); // Use navigate here
       }
     }
-  }
+  };
 
-  useEffect(() => { 
+  useEffect(() => {
     getUserInfo();
   }, []);
 
@@ -54,17 +57,20 @@ const Home = () => {
           </div>
         )}
       </div> */}
-      
+
       {/* Vertical Panel */}
-      <div className="flex min-h-screen"> 
-        <SidePanel selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-        <div className="w-7/8 p-4 flex-1"> 
-          {selectedOption === 'departments' && (
+      <div className="flex min-h-screen">
+        <SidePanel
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+        />
+        <div className="w-7/8 p-4 flex-1">
+          {selectedOption === "departments" && (
             <div className="ml-7 mt-4">
               <AddEditDepartment />
             </div>
           )}
-          {selectedOption === 'userPanel' && (
+          {selectedOption === "userPanel" && (
             <div className="ml-7 mt-4">
               <UserPanel />
             </div>

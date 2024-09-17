@@ -3,51 +3,50 @@ const mongoose = require("mongoose");
 const sectionSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
-  description: String
+  description: String,
 });
 
 const labSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
-  sections: [sectionSchema]
+  sections: [sectionSchema],
 });
 
 const departmentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: false
+    required: false,
   },
   description: String,
-  labs: [labSchema]
+  labs: [labSchema],
 });
 
 const combinedSchema = new mongoose.Schema({
   fullName: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
     required: true,
-    enum: ['Lab Assistant', 'Lab Incharge', 'HOD', 'Admin'] // Example of enum validation
+    enum: ["Lab Assistant", "Lab Incharge", "HOD", "Admin"], // Example of enum validation
   },
-  departments: [departmentSchema]
+  departments: [departmentSchema],
 });
 
-const CombinedModel = mongoose.model('CombinedModel', combinedSchema);
-
+const CombinedModel = mongoose.model("CombinedModel", combinedSchema);
 
 module.exports = CombinedModel;
