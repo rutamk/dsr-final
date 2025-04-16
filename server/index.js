@@ -925,7 +925,7 @@ app.get("/preSignedUrl", authenticateToken, async (req, res) => {
   const seconds = now.getSeconds().toString().padStart(2, "0");
   const formattedDate = `${day}-${month}-${year}_${hours}-${minutes}-${seconds}`;
 
-  const fileKey = `dsr/${userId}/${formattedDate}`;
+  const fileKey = `dsr/${userId}/${formattedDate}-image.jpg`;
   
   const command = new PutObjectCommand({
       Bucket: "dsr-s3-bucket",
