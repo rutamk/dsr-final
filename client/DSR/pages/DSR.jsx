@@ -4,6 +4,7 @@ import Controls from "../components/Controls";
 import DSR_Table from "../components/DSR_Table";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
+import FileUploader from "../components/FileUploader";
 
 const DSR = () => {
   const [allEntries, setAllEntries] = useState([]);
@@ -159,6 +160,11 @@ const DSR = () => {
         selectedLab={lab}
         selectedSection={section}
         getAllEntries={getAllEntries}
+      />
+      <FileUploader
+        selectedDept={department}
+        selectedLab={lab}
+        selectedSection={section}
       />
     </>
   );

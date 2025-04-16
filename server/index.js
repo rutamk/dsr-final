@@ -9,20 +9,31 @@ const jwt = require("jsonwebtoken");
 const { authenticateToken } = require("./utilities");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
-const upload = multer(); // For handling multipart/form-data
+const { S3Client, PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
+const upload = multer(); // For handling multipart/form-data
 const app = express();
 
 app.use(express.json());
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    // credentials: true,
   })
 );
+
+
+const s3Client = new S3Client({
+  region: "us-east-1", // e.g., "ap-south-1"
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
 
 mongoose
   .connect(process.env.ATLAS_DB_URL)
@@ -899,9 +910,154 @@ app.get("/get-departments", async (req, res) => {
   }
 });
 
-const PORT = 5000;
+app.get("/preSignedUrl", authenticateToken, async (req, res) => {
+
+  // console.log("in presignedurl api")
+  // @ts-ignore
+  const userId = req.user.user._id;
+
+  const now = new Date();
+  const day = now.getDate().toString().padStart(2, "0");
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const year = now.getFullYear();
+  const hours = now.getHours().toString().padStart(2, "0");
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const seconds = now.getSeconds().toString().padStart(2, "0");
+  const formattedDate = `${day}-${month}-${year}_${hours}-${minutes}-${seconds}`;
+
+  const fileKey = `dsr/${userId}/${formattedDate}`;
+
+  const command = new PutObjectCommand({
+      Bucket: "dsr-s3-bucket",
+      Key: fileKey,
+      ContentType: "image/png"
+  });
+
+  const preSignedUrl = await getSignedUrl(s3Client, command, {
+      expiresIn: 3600
+  });
+
+  // console.log("generated presigned URL is: " + preSignedUrl);
+  // console.log("imagekey is: " + fileKey);
+
+  return res.json({
+      preSignedUrl: preSignedUrl,
+      key: fileKey
+  });
+
+});
+
+app.post("/saveFileToDB", authenticateToken,  async (req, res) =>{
+  const userId = req.user.user._id;
+  const {selectedDept,
+    selectedLab,
+    selectedSection, key, contentType} = req.body
+  const s3URL = "https://dsr-s3-bucket.s3.us-east-1.amazonaws.com/"+ key;
+  
+  try {
+    const department = await Department.findOne({ deptName: selectedDept });
+    if (!department) {
+      console.error("Department not found");
+      return res.status(404).json({ error: "Department not found" });
+    }
+
+    const lab = department.labs.find((lab) => lab.labName === selectedLab);
+    if (!lab) {
+      console.error("Lab not found");
+      return res.status(404).json({ error: "Lab not found" });
+    }
+
+    const section = lab.sections.find(
+      (section) => section.sectionName === selectedSection
+    );
+    if (!section) {
+      console.error("Section not found");
+      return res.status(404).json({ error: "Section not found" });
+    }
+
+    const url = `https://d2djpjk4wjvf98.cloudfront.net/${key}`
+    // console.log("found the dept, lab, sec")
+    const newFile = {
+      fileName: s3URL,
+      url: url,
+      key: key,
+      contentType: req.body.contentType,
+    }
+
+    section.files.push(newFile);
+    console.log("pushed");
+    // Save the user to the database
+    await department.save();
+    console.log("saved");
+    res.status(201).json({
+      message: "file saved"
+    })
+  } catch (error) {
+    console.log(error);
+  }
+
+})
+
+app.get("/getFilesForSection", authenticateToken, async (req, res) => {
+  const { selectedDept, selectedLab, selectedSection } = req.query;
+
+  try {
+    const department = await Department.findOne({ deptName: selectedDept });
+    if (!department) return res.status(404).json({ error: "Department not found" });
+
+    const lab = department.labs.find((lab) => lab.labName === selectedLab);
+    if (!lab) return res.status(404).json({ error: "Lab not found" });
+
+    const section = lab.sections.find((section) => section.sectionName === selectedSection);
+    if (!section) return res.status(404).json({ error: "Section not found" });
+
+    res.status(200).json({ files: section.files });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.delete('/deleteFile', authenticateToken, async (req, res) => {
+  const { key, selectedDept, selectedLab, selectedSection } = req.body;
+
+  if (!key) return res.status(400).json({ error: 'File key is required' });
+
+  try {
+    // 1. Delete from S3
+    const command = new DeleteObjectCommand({
+      Bucket: 'dsr-s3-bucket',
+      Key: key,
+    });
+
+    await s3Client.send(command);
+
+    // 2. Delete from MongoDB
+    const department = await Department.findOne({ deptName: selectedDept });
+    if (!department) return res.status(404).json({ error: 'Department not found' });
+
+    const lab = department.labs.find((lab) => lab.labName === selectedLab);
+    if (!lab) return res.status(404).json({ error: 'Lab not found' });
+
+    const section = lab.sections.find((section) => section.sectionName === selectedSection);
+    if (!section) return res.status(404).json({ error: 'Section not found' });
+
+    // Remove file from section.files
+    section.files = section.files.filter((f) => f.key !== key);
+
+    // Save the updated document
+    await department.save();
+
+    res.status(200).json({ message: 'File deleted successfully from S3 and MongoDB' });
+  } catch (err) {
+    console.error('Error deleting file:', err);
+    res.status(500).json({ error: 'Failed to delete file' });
+  }
+});
+
+const PORT = 5001;
 app.listen(PORT, function () {
-  console.log("Server listening on port 5000!");
+  console.log("Server listening on port 5001!");
 });
 
 module.exports = app;

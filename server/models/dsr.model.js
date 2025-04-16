@@ -68,6 +68,14 @@ const sectionSchema = new Schema({
     required: true,
   },
   dsrEntries: [dsrSchema],
+  files: [
+    {
+      fileName: String,
+      url: String,
+      key: String,
+      contentType: String,
+    },
+  ],
 });
 
 // Define the Lab schema
