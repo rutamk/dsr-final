@@ -30,7 +30,7 @@ app.use(
 const s3Client = new S3Client({
   region: "us-east-1", // e.g., "ap-south-1"
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
@@ -926,7 +926,7 @@ app.get("/preSignedUrl", authenticateToken, async (req, res) => {
   const formattedDate = `${day}-${month}-${year}_${hours}-${minutes}-${seconds}`;
 
   const fileKey = `dsr/${userId}/${formattedDate}`;
-
+  
   const command = new PutObjectCommand({
       Bucket: "dsr-s3-bucket",
       Key: fileKey,
